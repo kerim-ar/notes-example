@@ -13,6 +13,6 @@ type NotesModel = {
 }
 
 export type {
-    Note,
-    NotesModel,
+	Note,
+	NotesModel,
 }
