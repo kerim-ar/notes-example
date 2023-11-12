@@ -1,25 +1,60 @@
-import React, {useState} from 'react'
 import {Note} from '../model/Notes'
 import styles from './NoteView.module.css'
 import {generateRandomColor} from '../generateRandomColor'
+import { FillIcon } from './FillIcon'
 
-function NoteView(props: {note: Note}) {
-	const {title, text} = props.note
+type NoteViewProps = {
+	note: Note,
+	setNote: (note: Note) => void,
+}
 
-	const [background, setBackground] = useState(props.note.background)
+function NoteView(props: NoteViewProps) {
+	const {
+		note,
+		setNote,
+	} = props
 
 	function onClick(): void {
-		setBackground(generateRandomColor())
+		setNote({
+			...note,
+			background: generateRandomColor()
+		})
 	}
 
 	return (
 		<div
 			className={styles.note}
-			style={{backgroundColor: background}}
-			onClick={onClick}
+			style={{backgroundColor: note.background}}
 		>
-			<h3>{title}</h3>
-			<p>{text}</p>
+			<div
+				onClick={onClick}
+				className={styles.fill}
+			>
+				<FillIcon/>
+			</div>
+			<input
+				className={styles.title}
+				value={note.title}
+				onChange={event => {
+					setNote({
+						...note,
+						title: event.target.value,
+					})
+				}}
+				placeholder='Add note title...'
+			/>
+			<textarea
+				value={note.text}
+				className={styles.text}
+				onChange={event => {
+					setNote({
+						...note,
+						text: event.target.value,
+					})
+				}}
+				placeholder='Add note text...'
+				rows={4}
+			/>
 		</div>
 	)
 }

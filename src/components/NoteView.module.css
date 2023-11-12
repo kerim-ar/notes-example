@@ -1,6 +1,50 @@
 .note {
+    position: relative;
     width: 300px;
     border-radius: 16px;
-    padding: 3px;
+    padding: 8px;
     margin: 5px auto;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.fill {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.fill:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    width: calc(100% - 80px);
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.text {
+    resize: none;
+    width: 100%;
+    background: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.title:focus,
+.text:focus {
+    outline: 1px solid black;
 }
