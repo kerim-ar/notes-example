@@ -11,19 +11,28 @@
     justify-content: space-around;
 }
 
-.fill {
+.topButton {
     position: absolute;
-    right: 8px;
-    top: 8px;
     width: 24px;
     height: 24px;
     padding: 4px;
-    cursor: pointer;
     border-radius: 12px;
 }
 
-.fill:hover {
+.topButton:hover {
     background: rgba(0, 0, 0, 0.1);
+}
+
+.fill {
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.dnd {
+    left: 8px;
+    top: 8px;
+    cursor: grab;
 }
 
 .title {

@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {ListView} from './components/ListView'
-import {Note, NotesModel} from './model/Notes'
-import {notesModelListMaximum, notesModelListMedium, notesModelListMinimum} from './data/data'
+import {Note} from './model/Notes'
+import {notesModelListMaximum} from './data/data'
 import {PreloaderContainer} from './components/Preloader'
 
 function App() {
