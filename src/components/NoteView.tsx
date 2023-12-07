@@ -6,11 +6,11 @@ import {joinCssClasses} from '../classes/joinCssClasses'
 import {DndIcon} from './DndIcon'
 import {RegisterDndItemFn} from '../hooks/useDraggableList'
 import {useEffect, useRef} from 'react'
+import {useAppActions} from '../redux/hooks'
 
 type NoteViewProps = {
 	index: number
 	note: Note
-	setNote: (note: Note) => void
 	registerDndItem: RegisterDndItemFn
 }
 
@@ -18,15 +18,17 @@ function NoteView(props: NoteViewProps) {
 	const {
 		index,
 		note,
-		setNote,
 		registerDndItem,
 	} = props
 
+	const {
+		createChangeBackgroundAction,
+		createChangeTitleAction,
+		createChangeTextAction,
+	} = useAppActions()
+
 	function onClick(): void {
-		setNote({
-			...note,
-			background: generateRandomColor()
-		})
+		createChangeBackgroundAction(note.id, generateRandomColor())
 	}
 
 	const ref = useRef<HTMLDivElement>(null)
@@ -92,10 +94,7 @@ function NoteView(props: NoteViewProps) {
 				className={styles.title}
 				value={note.title}
 				onChange={event => {
-					setNote({
-						...note,
-						title: event.target.value,
-					})
+					createChangeTitleAction(note.id, event.target.value)
 				}}
 				placeholder='Add note title...'
 			/>
@@ -103,10 +102,7 @@ function NoteView(props: NoteViewProps) {
 				value={note.text}
 				className={styles.text}
 				onChange={event => {
-					setNote({
-						...note,
-						text: event.target.value,
-					})
+					createChangeTextAction(note.id, event.target.value)
 				}}
 				placeholder='Add note text...'
 				rows={4}

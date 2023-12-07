@@ -3,29 +3,25 @@ import {useDraggableList} from '../hooks/useDraggableList'
 import {Note} from '../model/Notes'
 import {NoteView} from './NoteView'
 import styles from './ListView.module.css'
+import {useAppActions, useAppSelector} from '../redux/hooks'
+import {getNote} from '../model/utils'
 
 type ListViewProps = {
     notes: Array<Note>,
-	setNotes: (notes: Array<Note>) => void,
 }
 
 function List(props: ListViewProps) {
 	const {
 		notes,
-		setNotes,
 	} = props
 
 	const ref = useRef<HTMLDivElement>(null)
+	const {createChangeOrderAction} = useAppActions()
 
 	const {
 		registerDndItem,
 	} = useDraggableList({
-		onOrderChange: (from, to) => {
-			const newNotes = [...notes]
-			const removed = newNotes.splice(from, 1)
-			newNotes.splice(to, 0, removed[0])
-			setNotes(newNotes)
-		}
+		onOrderChange: createChangeOrderAction
 	})
 
 	return (
@@ -35,14 +31,6 @@ function List(props: ListViewProps) {
 					key={note.id}
 					index={index}
 					note={note}
-					setNote={newNote => {
-						setNotes(notes.map(note => {
-							if (newNote.id === note.id) {
-								return newNote
-							}
-							return note
-						}))
-					}}
 					registerDndItem={registerDndItem}
 				/>
 			))}
@@ -50,12 +38,10 @@ function List(props: ListViewProps) {
 	)
 }
 
-function ListView(props: ListViewProps) {
-	const {
-		notes,
-		setNotes,
-	} = props
-	const archivedNotes = notes.filter(note => note.isArchived)
+function ListView() {
+	const notes = useAppSelector(state => state.notes)
+	const {createAddNoteAction} = useAppActions()
+
 	const notArchivedNotes = notes.filter(note => !note.isArchived)
 	const pinnedNotes = notArchivedNotes.filter(note => note.isPinned)
 	const unpinnedNotes = notArchivedNotes.filter(note => !note.isPinned)
@@ -66,20 +52,15 @@ function ListView(props: ListViewProps) {
 				<p>Pinned</p>
 				<List
 					notes={pinnedNotes}
-					setNotes={newPinnedNotes => {
-						setNotes([...newPinnedNotes, ...unpinnedNotes, ...archivedNotes])
-					}}
 				/>
 			</div>
 			<div>
 				<p>Others</p>
 				<List
 					notes={unpinnedNotes}
-					setNotes={newUnpinnedNotes => {
-						setNotes([...pinnedNotes, ...newUnpinnedNotes, ...archivedNotes])
-					}}
 				/>
 			</div>
+			<button onClick={() => createAddNoteAction(getNote())}>Add Note</button>
 		</div>
 	)
 }

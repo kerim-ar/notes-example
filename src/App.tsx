@@ -16,10 +16,7 @@ function App() {
 	}, [])
 
 	const content = notes
-		? <ListView
-			notes={notes}
-			setNotes={setNotes}
-		/>
+		? <ListView/>
 		: <PreloaderContainer/>
 
 	return (
