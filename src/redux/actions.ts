@@ -6,7 +6,9 @@ enum NotesActions {
     CHANGE_BACKGROUND = 'CHANGE_BACKGROUND',
     CHANGE_ORDER = 'CHANGE_ORDER',
     ADD_NOTE = 'ADD_NOTE',
-    DELETE_NOTE = 'DELETE_NOTE'
+    DELETE_NOTE = 'DELETE_NOTE',
+    UNDO = 'UNDO',
+    REDO = 'REDO',
 }
 
 type ChangeTitleAction = {
@@ -53,7 +55,15 @@ type DeleteNoteAction = {
     }
 }
 
-type Action = ChangeTitleAction | ChangeTextAction | ChangeBackgroundAction | ChangeOrderAction | AddNoteAction | DeleteNoteAction
+type UndoAction = {
+    type: NotesActions.UNDO,
+}
+
+type RedoAction = {
+    type: NotesActions.REDO,
+}
+
+type Action = ChangeTitleAction | ChangeTextAction | ChangeBackgroundAction | ChangeOrderAction | AddNoteAction | DeleteNoteAction | UndoAction | RedoAction
 
 export {
 	NotesActions,

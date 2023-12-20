@@ -57,6 +57,18 @@ function createDeleteNoteAction(noteId: string) {
 	}
 }
 
+function createUndoAction() {
+	return {
+		type: NotesActions.UNDO,
+	}
+}
+
+function createRedoAction() {
+	return {
+		type: NotesActions.REDO,
+	}
+}
+
 export {
 	createChangeBackgroundAction,
 	createChangeTitleAction,
@@ -64,4 +76,6 @@ export {
 	createChangeOrderAction,
 	createAddNoteAction,
 	createDeleteNoteAction,
+	createUndoAction,
+	createRedoAction,
 }

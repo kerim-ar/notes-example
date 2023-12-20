@@ -4,6 +4,7 @@ import {ListView} from './components/ListView'
 import {Note} from './model/Notes'
 import {notesModelListMaximum} from './data/data'
 import {PreloaderContainer} from './components/Preloader'
+import {useUndoRedoListeners} from './hooks/useUndoRedoListeners'
 
 function App() {
 	const [notes, setNotes] = useState<Array<Note>|null>(null)
@@ -14,6 +15,8 @@ function App() {
 			setNotes(notesModelListMaximum.notes)
 		}, 1200)
 	}, [])
+
+	useUndoRedoListeners()
 
 	const content = notes
 		? <ListView/>
